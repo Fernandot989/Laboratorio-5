@@ -55,22 +55,28 @@ void main(void) {
     setupPWM2();
     setupADC();
     while(1){
-        ADCON0bits.CHS = 0b0000;
-        ADCON0bits.GO = 1;
-        while(ADCON0bits.GO == 1){;}
+/**************************************************
+ Primer ADC activa PWM del puerto RC2
+ ***************************************************/
+        ADCON0bits.CHS = 0b0000;           //Se establece el primer el puerto AN0 para convertir
+        ADCON0bits.GO = 1;                 
+        while(ADCON0bits.GO == 1){;}       
         ADIF = 0;
-        ADC1 = ADRESH;
-        i = ADC1/16;
-        if(i > 7 && 16 > i){
-            CCPR1L = i;
+        ADC1 = ADRESH; 
+        i = ADC1/16;                        //ADC se divide en 16
+        if(i > 7 && 16 > i){                //Si se mantiene en 7 y 16 este se ejecutará
+            CCPR1L = i;                     //CCPR1L es igual al valor de "i"
             __delay_ms(100);   
         }else {i = i;}
-        ADCON0bits.CHS == 0b0001;
+ /**************************************************
+ Segundo ADC activa PWM2 del puerto RC3
+ ***************************************************/
+        ADCON0bits.CHS == 0b0001;           //Se establece AN1 como puerto a convertir
         ADCON0bits.GO == 1;
         while(ADCON0bits.GO == 1){;}
         ADIF = 0;
         ADC2 = ADRESH;
-        i = ADC2/16;
+        i = ADC2/16;                        //Se establece el mismo parametró qu eel anterior
         if(i > 7 && 16 > i){
             CCPR2L = i;
             __delay_ms(100);   
