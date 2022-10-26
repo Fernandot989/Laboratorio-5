@@ -71,8 +71,8 @@ void main(void) {
  /**************************************************
  Segundo ADC activa PWM2 del puerto RC3
  ***************************************************/
-        ADCON0bits.CHS == 0b0001;           //Se establece AN1 como puerto a convertir
-        ADCON0bits.GO == 1;
+        ADCON0bits.CHS = 0b0001;           //Se establece AN1 como puerto a convertir
+        ADCON0bits.GO = 1;
         while(ADCON0bits.GO == 1){;}
         ADIF = 0;
         ADC2 = ADRESH;
@@ -111,7 +111,7 @@ void setupPWM(void){
 }
 
 void setupPWM2(void){
-    TRISCbits.TRISC3 = 1;
+    TRISCbits.TRISC1 = 1;
     PR2 = 155;
     CCP2CONbits.CCP2M = 0b1111;
     CCP2CONbits.DC2B1 = 0b1;
@@ -121,7 +121,7 @@ void setupPWM2(void){
     T2CONbits.T2CKPS = 0b11;    
     TMR2ON = 1;
     while(!TMR2IF);
-    TRISCbits.TRISC3 = 0;
+    TRISCbits.TRISC1 = 0;
 }
 
 void setupADC(void){
